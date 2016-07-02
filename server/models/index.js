@@ -9,7 +9,7 @@ module.exports = {
           throw err;
         }
 
-        var results = rows || {};
+        var results = rows || [{}];
         cb(results);
       });
     }, 
