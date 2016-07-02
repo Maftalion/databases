@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>chatterbox</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- dependencies -->
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+    <!-- your scripts -->
+    <script src="client.js"></script>
+  </head>
+  <body>
+    <div id="main">
+      <h1>chatter<em>box</em></h1>
+      <form action="#" id="send" method="post">
+        <input type="text" name="message" id="message"/>
+        <input type="submit" name="submit" class="submit"/>
+      </form>
+    </div>
+    <div id="chats"></div>
+    <script>
+      $(function() {
+        // jQuery-based app initialization
+        console.log('Running jQuery Version...');
+        app.init();
+      });
+    </script>
+  </body>
+</html>
