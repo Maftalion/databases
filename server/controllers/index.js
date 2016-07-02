@@ -4,7 +4,7 @@ var headers = {
   'access-control-allow-methods': 'GET, POST, OPTIONS',
   'access-control-allow-headers': 'content-type, accept',
   'access-control-max-age': 10, // Seconds.
-  'Content-Type': 'text/plain'
+  'Content-Type': 'application/json'
 };
 
 module.exports = {
