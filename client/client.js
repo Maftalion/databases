@@ -10,8 +10,20 @@ var app = {
   lastMessageId: 0,
   friends: {},
 
+  promptUsername: function() {
+    if (!/(&|\?)username=/.test(window.location.search)) {
+      var newSearch = window.location.search;
+      if (newSearch !== '' & newSearch !== '?') {
+        newSearch += '&';
+      }
+      newSearch += 'username=' + (prompt('What is your name?') || 'anonymous');
+      window.location.search = newSearch;
+    }
+  },
+
   init: function() {
     // Get username
+    app.promptUsername();
     app.username = window.location.search.substr(10);
 
     // Cache jQuery selectors
