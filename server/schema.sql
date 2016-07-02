@@ -1,5 +1,4 @@
--- Uncomment the following for some convenience
--- DROP DATABASE chat;
+DROP DATABASE chat;
 CREATE DATABASE chat;
 
 USE chat;
