@@ -1,10 +1,12 @@
--- DROP DATABASE IF EXISTS chat;
+-- Uncomment the following for some convenience
+-- DROP DATABASE chat;
 CREATE DATABASE chat;
 
 USE chat;
 
+ -- TODO: make things work with a UNIQUE constraint here
 CREATE TABLE users (
-  id varchar(255) NOT NULL UNIQUE,
+  id varchar(255) NOT NULL,
   PRIMARY KEY (id)
 );
 
