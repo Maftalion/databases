@@ -1,11 +1,7 @@
+-- DROP DATABASE IF EXISTS chat;
 CREATE DATABASE chat;
 
 USE chat;
-
-CREATE TABLE rooms (
-  id varchar(255) NOT NULL UNIQUE,
-  PRIMARY KEY (id)
-);
 
 CREATE TABLE users (
   id varchar(255) NOT NULL UNIQUE,
@@ -19,8 +15,7 @@ CREATE TABLE messages (
   username varchar(255) NOT NULL,
   roomname varchar(255) NOT NULL,
   PRIMARY KEY (id),
-  FOREIGN KEY (username) REFERENCES users(id),
-  FOREIGN KEY (roomname) REFERENCES rooms(id)
+  FOREIGN KEY (username) REFERENCES users(id)
 );
 
 /* Create other tables and define schemas for them here! */
