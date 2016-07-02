@@ -11,14 +11,15 @@ module.exports = {
   messages: {
     // a function which handles a get request for all messages
     get: function (req, res) {
-      // call models.messages.get()
-        // pipe the result to http response
+      models.messages.get(function(results) {
+        var json = JSON.stringify(results);
+        console.log(results);
+        console.log(json);
+        res.send(results);
+      });
     },
     // a function which handles posting a message to the database
     post: function (req, res) {
-      console.log('----------- inside of messages/post handler');
-      // call models.messages.post(data)
-      // respond to client
       var message = req.body;
 
       models.messages.post(message, function() {

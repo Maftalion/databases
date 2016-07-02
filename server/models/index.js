@@ -3,15 +3,14 @@ var db = require('../db');
 module.exports = {
   messages: {
     // a function which produces all the messages
-    get: function () {
+    get: function (cb) {
       db.query('SELECT * FROM messages', function(err, rows, fields) {
         if (err) {
           throw err;
         }
-        console.log('inside of messages model');
-        console.log(rows);
-        // console.log(fields);
-        return rows;
+
+        var results = rows || {};
+        cb(results);
       });
     }, 
     // a function which can be used to insert a message into the database
