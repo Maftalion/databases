@@ -16,14 +16,13 @@ describe('Persistent Node Chat Server', function() {
     });
     dbConnection.connect();
 
-    var tablename = 'messages'; 
-
     /* Empty the db table before each test so that multiple tests
      * (or repeated runs of the tests) won't screw each other up: */
-    dbConnection.query('truncate ' + tablename, done);
+    done();
   });
 
   afterEach(function() {
+    // TODO: reset DB after every run?
     dbConnection.end();
   });
 
@@ -81,9 +80,12 @@ describe('Persistent Node Chat Server', function() {
       // Now query the Node chat server and see if it returns
       // the message we just inserted:
       request('http://127.0.0.1:3000/classes/messages', function(error, response, body) {
+        if (err) { throw err; }
+
+        console.log(body);
         var messageLog = JSON.parse(body);
-        expect(messageLog[0].text).to.equal('Men like you can never change!');
-        expect(messageLog[0].roomname).to.equal('main');
+        expect(messageLog[0].message).to.equal('In mercy\'s name, three days is all I need.');
+        expect(messageLog[0].roomname).to.equal('Hello');
         done();
       });
     });
