@@ -22,9 +22,10 @@ module.exports = {
     post: function (req, res) {
       var message = req.body;
 
-      models.messages.post(message, function() {
+      models.messages.post(message, function(result) {
         res.writeHead(201, headers);
-        res.end('Message added');
+        var json = JSON.stringify(result);
+        res.end(json);
       });
     }
   },
