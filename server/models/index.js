@@ -18,18 +18,18 @@ module.exports = {
       db.query('INSERT into messages SET ?', message, function(err, result) {
         if (err) {
           return db.rollback(function() {
-            throw err;
+            cb(err);
           });
         }
 
         db.commit(function(err) {
           if (err) {
             return db.rollback(function() {
-              throw err;
+              cb(err);
             });
           }
 
-          cb();
+          cb(message);
         });
       });
     }
