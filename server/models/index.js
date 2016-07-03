@@ -16,6 +16,7 @@ module.exports = {
     // a function which can be used to insert a message into the database
     post: function (message, cb) {
       db.query('INSERT into messages SET ?', message, function(err, result) {
+        // TODO: check that username exists. Handle error properly!
         if (err) {
           return db.rollback(function() {
             cb(err);
@@ -28,8 +29,7 @@ module.exports = {
               cb(err);
             });
           }
-
-          cb(message);
+          cb(result);
         });
       });
     }
@@ -40,20 +40,20 @@ module.exports = {
     get: function () {},
     post: function (name, cb) {
       db.query('INSERT into users SET id=?', name, function(err, result) {
+
         if (err) {
           return db.rollback(function() {
-            throw err;
+            cb(err);
           });
         }
 
         db.commit(function(err) {
           if (err) {
             return db.rollback(function() {
-              throw err;
+              cb(err);
             });
           }
-
-          cb();
+          cb(null, result);
         });
       });
     }

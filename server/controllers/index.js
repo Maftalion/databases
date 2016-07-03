@@ -38,9 +38,17 @@ module.exports = {
     post: function (req, res) {
       var name = req.body.username;
 
-      models.users.post(name, function() {
-        res.writeHead(201, headers);
-        res.end('User added');
+      models.users.post(name, function(err, result) {
+        if (err) {
+          res.writeHead(500, headers);
+          res.end('Sorry, username taken. Try another!');
+        } else {
+          res.writeHead(201, headers);
+          var json = JSON.stringify(result);
+          console.log('from inside of succesful users/post contorller');
+          console.log(json);
+          res.end(json);
+        }
       });
     }
   }
