@@ -4,7 +4,8 @@ var app = {
 
   //TODO: The current 'toggleFriend' function just toggles the class 'friend'
   //to all messages sent by the user
-  server: 'http://localhost:3000/classes/messages',
+  messagesEndpoint: 'http://localhost:3000/classes/messages',
+  usersEndpoint: 'http://localhost:3000/classes/users',
   username: 'anonymous',
   roomname: 'lobby',
   lastMessageId: 0,
@@ -23,18 +24,21 @@ var app = {
 
   init: function() {
     // Get username
-    app.promptUsername();
-    app.username = window.location.search.substr(10);
+    // app.promptUsername();
+    
 
     // Cache jQuery selectors
+    app.$username = $('#username');
     app.$message = $('#message');
     app.$chats = $('#chats');
     app.$roomSelect = $('#roomSelect');
     app.$send = $('#send');
+    app.$sendUser = $('#sendUser');
 
     // Add listeners
     app.$chats.on('click', '.username', app.toggleFriend);
     app.$send.on('submit', app.handleSubmit);
+    app.$sendUser.on('submit', app.handleSubmitUsername);
     app.$roomSelect.on('change', app.saveRoom);
 
     // Fetch previous messages
@@ -44,13 +48,34 @@ var app = {
     // setInterval(app.fetch, 3000);
   },
 
-  send: function(data) {
+  sendUsername: function(data) {
+    // Clear messages input
+    app.$username.val('');
+    console.log(data);
+    // POST the message to the server
+    $.ajax({
+      url: app.usersEndpoint,
+      type: 'POST',
+      data: JSON.stringify(data),
+      contentType: 'application/json',
+      success: function (json) {
+        app.username = data.username;
+        console.log(app.username);
+      },
+      error: function (data) {
+        console.error('chatterbox: Failed to send username', data);
+        alert('Username taken, pick another!');
+      }
+    });
+  },
+
+  sendMessage: function(data) {
     // Clear messages input
     app.$message.val('');
 
     // POST the message to the server
     $.ajax({
-      url: app.server,
+      url: app.messagesEndpoint,
       type: 'POST',
       data: JSON.stringify(data),
       contentType: 'application/json',
@@ -66,7 +91,7 @@ var app = {
 
   fetch: function(animate) {
     $.ajax({
-      url: app.server,
+      url: app.messagesEndpoint,
       type: 'GET',
       contentType: 'application/json',
       // data: { order: '-createdAt'},
@@ -221,6 +246,14 @@ var app = {
     }
   },
 
+  handleSubmitUsername: function(evt) {
+    var username = app.$username.val();
+    app.sendUsername({ username: username });
+
+    // Stop the form from submitting
+    evt.preventDefault();
+  },
+
   handleSubmit: function(evt) {
     var message = {
       username: app.username,
@@ -228,7 +261,7 @@ var app = {
       roomname: app.roomname || 'lobby'
     };
 
-    app.send(message);
+    app.sendMessage(message);
 
     // Stop the form from submitting
     evt.preventDefault();

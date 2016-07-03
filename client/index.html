@@ -20,10 +20,17 @@
         <select id="roomSelect">
         </select>
       </div>
+      <form action="#" id="sendUser" method="post">
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username"/>
+        <input type="submit" name="submit" class="submit"/>
+      </form>
       <form action="#" id="send" method="post">
+        <label for="message">Message</label>
         <input type="text" name="message" id="message"/>
         <input type="submit" name="submit" class="submit"/>
-      </form>    </div>
+      </form>
+    </div>
     <div id="chats"></div>
 
     <script>
